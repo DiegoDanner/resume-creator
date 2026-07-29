@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luiz Eduardo Pinto de Oliveira - Resume</title>
+  <!-- Google Fonts & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Open Sans', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e2e8f0 100%);
+      color: #1e293b;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Resume Document Container */
+    .resume-container {
+      width: min(210mm, calc(100vw - 32px));
+      max-width: 100%;
+      min-height: 297mm;
+      background-color: #ffffff;
+      margin: 0 auto;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .resume-container > * {
+      min-width: 0;
+    }
+
+    .toolbar-shell {
+      width: min(100%, 980px);
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Primary Colors matching reference screenshot */
+    .color-navy-head { color: #1c355e; }
+    .color-sub-head { color: #43719e; }
+    .color-company { color: #326ea0; }
+    .bg-navy-sidebar { background: linear-gradient(180deg, #24364a 0%, #1e2d3d 100%); }
+    .border-navy-line { border-color: #1c355e; }
+
+    /* Editable highlight effect */
+    [contenteditable="true"] {
+      outline: 2px dashed #3b82f6 !important;
+      outline-offset: 2px;
+      border-radius: 2px;
+      background-color: rgba(59, 130, 246, 0.05);
+    }
+
+    @media (max-width: 900px) {
+      .resume-container {
+        width: min(100%, calc(100vw - 20px));
+        min-height: auto;
+        border-radius: 8px;
+      }
+
+      .resume-header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .resume-header-left,
+      .resume-header-right {
+        width: 100%;
+        text-align: left;
+        padding-right: 0;
+      }
+
+      .resume-body {
+        flex-direction: column;
+      }
+
+      .resume-main,
+      .resume-sidebar {
+        width: 100%;
+      }
+
+      .resume-sidebar {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 0;
+      }
+
+      .resume-container {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      header,
+      .resume-main,
+      .resume-sidebar {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .resume-main {
+        padding-bottom: 20px;
+      }
+    }
+
+    /* Print Setup */
+    @media print {
+      body {
+        background-color: #ffffff;
+        margin: 0;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .resume-container {
+        width: 100% !important;
+        min-height: auto !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body class="py-4 sm:py-6 min-h-screen flex flex-col items-center px-3 sm:px-4">
+
+  <!-- Control Toolbar (Hidden when printing) -->
+  <div class="toolbar-shell no-print bg-slate-900 text-white px-4 sm:px-6 py-3 rounded-lg shadow-lg mb-4 sm:mb-6 flex flex-wrap items-center gap-3 sm:gap-4 text-sm font-medium">
+    <span class="text-slate-400">Resume Tools:</span>
+    
+    <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-1.5 rounded transition flex items-center gap-2">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+      Print / Save as PDF
+    </button>
+
+    <div class="h-4 w-px bg-slate-700"></div>
+
+    <div class="flex items-center gap-2">
+      <span class="text-xs text-slate-300">Content Version:</span>
+      <button id="btn-orig" onclick="toggleVersion('original')" class="bg-slate-700 text-white px-3 py-1 rounded text-xs hover:bg-slate-600 font-semibold border border-blue-400">
+        Original Text
+      </button>
+      <button id="btn-enh" onclick="toggleVersion('enhanced')" class="bg-slate-800 text-slate-300 px-3 py-1 rounded text-xs hover:bg-slate-700 font-semibold">
+        Enhanced Text
+      </button>
+    </div>
+
+    <div class="h-4 w-px bg-slate-700"></div>
+
+    <button id="edit-toggle" onclick="toggleEdit()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 px-3 py-1 rounded text-xs transition">
+      ✏️ Enable Live Edit Mode
+    </button>
+  </div>
+
+  <!-- Document Canvas -->
+  <div class="resume-container" id="resume-document">
+    
+    <!-- HEADER AREA -->
+    <header class="resume-header pt-8 px-8 pb-4 flex justify-between items-start">
+      <!-- Left Header: Name & Title -->
+      <div class="resume-header-left w-2/3 pr-4">
+        <h1 class="text-3xl font-extrabold tracking-tight color-navy-head leading-none mb-1 uppercase">
+          LUIZ EDUARDO PINTO DE OLIVEIRA
+        </h1>
+        <p class="text-xs font-bold color-sub-head tracking-wider uppercase">
+          HOSPITALITY • CUSTOMER SERVICE • OPERATIONS • BILINGUAL COMMUNICATION
+        </p>
+      </div>
+
+      <!-- Right Header: Contact Information -->
+      <div class="resume-header-right w-1/3 text-right text-xs font-semibold text-slate-700 leading-tight">
+        <p>Joinville, Santa Catarina, Brazil</p>
+        <p>47 98836-4778</p>
+        <p>yoluizinho@gmail.com</p>
+        <p>Driver’s License: Category B</p>
+      </div>
+    </header>
+
+    <!-- HORIZONTAL DIVIDER BAR -->
+    <div class="px-8 mb-4">
+      <div class="border-t-2 border-navy-line w-full"></div>
+    </div>
+
+    <!-- TWO COLUMN BODY LAYOUT -->
+    <div class="resume-body flex flex-1">
+      
+      <!-- LEFT COLUMN (Main Content) -->
+      <main class="resume-main w-[66%] pl-8 pr-6 pb-8">
+        
+        <!-- Professional Summary -->
+        <section class="mb-6">
+          <h2 class="text-base font-bold uppercase color-navy-head tracking-wide mb-2 border-b border-slate-200 pb-0.5">
+            PROFESSIONAL SUMMARY
+          </h2>
+          <p id="summary-text" class="text-xs text-slate-700 leading-relaxed font-normal">
+            Dynamic, dedicated, and creative professional with ease in teamwork and strong interpersonal relationships. Known for punctuality, determination, and commitment to professional values such as respect and honesty. Experience includes hospitality, bilingual reception and interpreting, sales, and operational/technical supervision.
+          </p>
+        </section>
+
+        <!-- Professional Experience -->
+        <section>
+          <h2 class="text-base font-bold uppercase color-navy-head tracking-wide mb-3 border-b border-slate-200 pb-0.5">
+            PROFESSIONAL EXPERIENCE
+          </h2>
+
+          <div id="experience-list" class="space-y-3.5">
+            
+            <!-- Job Entry 1 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Operations Supervisor / Inspection Technician</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Azimute TECH Inspeção e Tecnologia LTDA — Joinville, SC</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Operational supervision and technical inspection activities.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 2 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Receptionist / Bilingual Interpreter</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Hotel Naalt — Joinville, SC</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Reception duties and bilingual guest support.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 3 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Senior Receptionist / Bilingual Interpreter</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Bourbon Convention Hotel — Curitiba, PR</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Senior reception duties and bilingual guest support.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 4 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Reception Supervisor / Bilingual Interpreter</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Hotel Bristol UPPER — Curitiba, PR</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Reception supervision and bilingual guest support.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 5 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Receptionist / Bilingual Interpreter</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Resort Praia Mansa Caiobá Hotel — Matinhos, PR</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Reception duties and bilingual guest support.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 6 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Receptionist / Bilingual Interpreter</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Hotel Bristol Brasil 500 — Curitiba, PR</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Reception duties and bilingual guest support.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 7 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Sales Associate — Team Sports / Nature</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Decathlon Ferrol — Ferrol, Spain (6-Month Contract)</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Sales position in the Team Sports / Nature section.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 8 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Volunteer — Guest & Reserve Operations</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Fundação Boticário Reserva Natural Salto Morato — Guaraqueçaba, PR</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Volunteer work at the natural reserve.</li>
+              </ul>
+            </div>
+
+            <!-- Job Entry 9 -->
+            <div class="exp-item">
+              <h3 class="text-xs font-bold text-slate-900 leading-snug">Cashier / Gas Station Operator</h3>
+              <p class="text-xs font-bold color-company mb-0.5">Posto SAFF IV — Ponta Grossa, PR</p>
+              <ul class="list-disc list-inside text-xs text-slate-700 space-y-0.5 pl-1">
+                <li class="bullet-item">Cash-register operation and customer service.</li>
+              </ul>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- RIGHT COLUMN (Dark Sidebar) -->
+      <aside class="resume-sidebar w-[34%] bg-navy-sidebar text-white p-6 flex flex-col justify-between">
+        
+        <div class="space-y-5">
+          <!-- Core Skills Section -->
+          <section>
+            <h2 class="text-sm font-extrabold uppercase tracking-wider text-white border-b border-slate-600 pb-1 mb-2">
+              CORE SKILLS
+            </h2>
+            <ul class="text-xs text-slate-200 space-y-1">
+              <li class="before:content-['•_']">Customer service</li>
+              <li class="before:content-['•_']">Reception operations</li>
+              <li class="before:content-['•_']">Bilingual communication</li>
+              <li class="before:content-['•_']">Interpreting</li>
+              <li class="before:content-['•_']">Teamwork</li>
+              <li class="before:content-['•_']">Interpersonal communication</li>
+              <li class="before:content-['•_']">Supervision</li>
+              <li class="before:content-['•_']">Organization</li>
+              <li class="before:content-['•_']">Punctuality</li>
+              <li class="before:content-['•_']">Problem-solving</li>
+            </ul>
+          </section>
+
+          <!-- Languages Section -->
+          <section>
+            <h2 class="text-sm font-extrabold uppercase tracking-wider text-white border-b border-slate-600 pb-1 mb-2">
+              LANGUAGES
+            </h2>
+            <div class="text-xs text-slate-200 space-y-1.5">
+              <div>
+                <p class="font-bold text-white">English</p>
+                <p class="text-slate-300">C1 — Fluent</p>
+              </div>
+              <div>
+                <p class="font-bold text-white">Spanish</p>
+                <p class="text-slate-300">C2 — Fluent / Native Proficiency</p>
+              </div>
+              <div>
+                <p class="font-bold text-white">Portuguese</p>
+                <p class="text-slate-300">Native</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Technical Skills Section -->
+          <section>
+            <h2 class="text-sm font-extrabold uppercase tracking-wider text-white border-b border-slate-600 pb-1 mb-2">
+              TECHNICAL SKILLS
+            </h2>
+            <ul class="text-xs text-slate-200 space-y-1">
+              <li class="before:content-['•_']">Microsoft Excel</li>
+              <li class="before:content-['•_']">Microsoft Word</li>
+              <li class="before:content-['•_']">Microsoft PowerPoint</li>
+              <li class="before:content-['•_']">AutoCAD</li>
+              <li class="before:content-['•_']">Desbravador</li>
+              <li class="before:content-['•_']">Visual Front Office (CMNet)</li>
+            </ul>
+          </section>
+
+          <!-- Education Section -->
+          <section>
+            <h2 class="text-sm font-extrabold uppercase tracking-wider text-white border-b border-slate-600 pb-1 mb-2">
+              EDUCATION
+            </h2>
+            <div class="text-xs text-slate-200 space-y-1.5">
+              <div>
+                <p class="font-bold text-white">High School</p>
+                <p class="text-slate-300">Completed</p>
+              </div>
+              <div>
+                <p class="font-bold text-white">Higher Education</p>
+                <p class="text-slate-300">Incomplete</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Personal Information Section -->
+          <section>
+            <h2 class="text-sm font-extrabold uppercase tracking-wider text-white border-b border-slate-600 pb-1 mb-2">
+              PERSONAL INFORMATION
+            </h2>
+            <div class="text-xs text-slate-200 space-y-1">
+              <p><span class="font-semibold text-slate-300">Date of birth:</span> 02/05/1994</p>
+              <p><span class="font-semibold text-slate-300">Marital status:</span> Married</p>
+              <p><span class="font-semibold text-slate-300">Driver's license:</span> Category B</p>
+            </div>
+          </section>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- JavaScript for Interactive Controls -->
+  <script>
+    let isEditing = false;
+
+    // Content datasets for toggle function
+    const contents = {
+      original: {
+        summary: "Dynamic, dedicated, and creative professional with ease in teamwork and strong interpersonal relationships. Known for punctuality, determination, and commitment to professional values such as respect and honesty. Experience includes hospitality, bilingual reception and interpreting, sales, and operational/technical supervision.",
+        bullets: [
+          "Operational supervision and technical inspection activities.",
+          "Reception duties and bilingual guest support.",
+          "Senior reception duties and bilingual guest support.",
+          "Reception supervision and bilingual guest support.",
+          "Reception duties and bilingual guest support.",
+          "Reception duties and bilingual guest support.",
+          "Sales position in the Team Sports / Nature section.",
+          "Volunteer work at the natural reserve.",
+          "Cash-register operation and customer service."
+        ]
+      },
+      enhanced: {
+        summary: "Trilingual Hospitality & Operations Specialist with extensive experience in reception supervision, PMS hotel management systems (Desbravador, CMNet), and technical inspection oversight. Proven track record of delivering exceptional customer service in international settings across Brazil and Spain. Recognized for efficiency, team coordination, and bilingual guest relations.",
+        bullets: [
+          "Supervised technical inspection operations, ensuring strict compliance with quality, safety, and reporting standards.",
+          "Welcomed international and domestic guests, managing seamless check-in routines and high-priority bilingual guest support.",
+          "Managed front desk operations for high-occupancy convention guests; handled VIP relations, billing, and property management systems.",
+          "Led reception shift operations, supervised front desk staff, and trained team members on bilingual interaction protocols.",
+          "Delivered frontline reception services, rapid guest check-ins, and conflict resolution in high-volume resort environments.",
+          "Provided bilingual check-in routines and customer support using CMNet Visual Front Office software.",
+          "Delivered technical sales advice in Spanish within an international retail environment, managing section merchandising and POS.",
+          "Assisted with visitor orientation, environmental education, and reserve operational maintenance.",
+          "Executed cash handling, daily reconciliation, and direct customer assistance during high-volume gas station operations."
+        ]
+      }
+    };
+
+    function toggleVersion(version) {
+      const summaryEl = document.getElementById('summary-text');
+      const bulletEls = document.querySelectorAll('.bullet-item');
+      
+      const btnOrig = document.getElementById('btn-orig');
+      const btnEnh = document.getElementById('btn-enh');
+
+      summaryEl.innerText = contents[version].summary;
+
+      bulletEls.forEach((el, idx) => {
+        if (contents[version].bullets[idx]) {
+          el.innerText = contents[version].bullets[idx];
+        }
+      });
+
+      if (version === 'original') {
+        btnOrig.className = "bg-slate-700 text-white px-3 py-1 rounded text-xs hover:bg-slate-600 font-semibold border border-blue-400";
+        btnEnh.className = "bg-slate-800 text-slate-300 px-3 py-1 rounded text-xs hover:bg-slate-700 font-semibold";
+      } else {
+        btnEnh.className = "bg-slate-700 text-white px-3 py-1 rounded text-xs hover:bg-slate-600 font-semibold border border-blue-400";
+        btnOrig.className = "bg-slate-800 text-slate-300 px-3 py-1 rounded text-xs hover:bg-slate-700 font-semibold";
+      }
+    }
+
+    function toggleEdit() {
+      isEditing = !isEditing;
+      const editableElements = document.querySelectorAll('#resume-document h1, #resume-document h2, #resume-document h3, #resume-document p, #resume-document li, #resume-document span');
+      const btn = document.getElementById('edit-toggle');
+
+      editableElements.forEach(el => {
+        el.contentEditable = isEditing ? "true" : "false";
+      });
+
+      if (isEditing) {
+        btn.innerText = "💾 Lock / Save Text";
+        btn.className = "bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1 rounded text-xs transition";
+      } else {
+        btn.innerText = "✏️ Enable Live Edit Mode";
+        btn.className = "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 px-3 py-1 rounded text-xs transition";
+      }
+    }
+  </script>
+</body>
+</html>
